@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raised Tickets</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg px-2 py-3 navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#"><h3>HI-5 SOLUTIONS</h3></a>
+                <h1 class="text-white">HELPDESK TICKETING SYSTEM</h1>
+                <ul class="navbar-nav ">
+                    <li class="nav-item"><a class="nav-link text-white" href="tic_home.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="#contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="login.html" id="logoutLink" style="display:none">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <h2 class="text-center p-3">Raised Helpdesk Tickets</h2>
+    <div class="px-5">
+        <table class="table table-bordered mt-4">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Problem</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="ticketList"></tbody>
+        </table>
+    </div>
+    <div class="text-center" id="userOptions">
+        <a href="raise_ticket.html">Submit a New Ticket</a>
+    </div>
+
+<script>
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+const ticketList = document.getElementById("ticketList");
+const tickets = JSON.parse(localStorage.getItem("tickets") || "[]");
+const userOptions = document.getElementById("userOptions");
+
+logoutLink.style.display = "block";
+logoutLink.addEventListener("click", () => {
+    alert("logged out successfully ");
+    localStorage.removeItem("currentUser");
+    window.location.reload();
+});
+function renderTickets() {
+    ticketList.innerHTML = "";
+    if (!currentUser) {
+        ticketList.innerHTML = `<tr><td colspan='6' class='text-danger text-center'>You must be logged in to view tickets.</td></tr>`;
+        return;
+    }
+
+    let filteredTickets = currentUser.role === "admin" ? tickets : tickets.filter(t => t.email === currentUser.email);
+
+    if (filteredTickets.length === 0) {
+        ticketList.innerHTML = `<tr><td colspan='6' class='text-center'>No tickets found.</td></tr>`;
+        return;
+    }
+
+    filteredTickets.forEach((ticket, index) => {
+        ticketList.innerHTML += `
+            <tr id="row-${index}">
+                <td>${ticket.id}</td>
+                <td>${ticket.email}</td>
+                <td><input type="text" class="form-control" value="${ticket.problem}" id="problem-${index}" ${currentUser.role !== 'admin' ? 'readonly' : ''}></td>
+                <td><input type="text" class="form-control" value="${ticket.description}" id="description-${index}" ${currentUser.role !== 'admin' ? 'readonly' : ''}></td>
+                <td><input type="text" class="form-control" value="${ticket.status}" id="status-${index}" ${currentUser.role !== 'admin' ? 'readonly' : ''}></td>
+                <td>
+                    ${currentUser.role === "admin" 
+                        ? `<button class="btn btn-sm btn-primary" onclick="saveTicket(${index})">Save</button>` 
+                        : '-'}
+                </td>
+            </tr>
+        `;
+    });
+}
+
+function saveTicket(index) {
+    const problem = document.getElementById(`problem-${index}`).value;
+    const description = document.getElementById(`description-${index}`).value;
+    const status = document.getElementById(`status-${index}`).value;
+
+    tickets[index].problem = problem;
+    tickets[index].description = description;
+    tickets[index].status = status;
+
+    localStorage.setItem("tickets", JSON.stringify(tickets));
+    alert("Ticket updated successfully.");
+    renderTickets();
+}
+
+if (currentUser && currentUser.role !== "user") {
+    userOptions.style.display = "none";
+}
+
+renderTickets();
+</script>
+</body>
+</html>
