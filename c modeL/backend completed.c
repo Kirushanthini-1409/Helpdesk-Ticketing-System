@@ -387,6 +387,7 @@ void register_user(node *head)
 	temp->tic=temp1;
 	temp->next=p->next;
 	p->next=temp;
+	printf("Registered successfully \n");
 	printf("\n\n");
 }
 

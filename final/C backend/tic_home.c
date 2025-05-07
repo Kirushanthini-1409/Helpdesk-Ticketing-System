@@ -24,17 +24,12 @@ int main() {
     // Navbar
     printf("<nav class='navbar navbar-expand-lg navbar-dark bg-dark px-2 py-3'>"
            "<div class='container-fluid'>"
-           "<a class='navbar-brand' href='/home.exe'><h3>HI-5 SOLUTIONS</h3></a>"
+           "<a class='navbar-brand' href='/cgi-bin/tic_home.exe'><h3>HI-5 SOLUTIONS</h3></a>"
            "<h1 class='text-white'>HELPDESK TICKETING SYSTEM</h1>"
            "<ul class='navbar-nav'>"
            "<li class='nav-item'><a class='nav-link text-white' href='/cgi-bin/home.exe'>Home</a></li>"
-           "<li class='nav-item'><a class='nav-link text-white' href='#contact'>Contact</a></li>");
-    if (strlen(sess_role)==0) {
-        printf("<li class='nav-item'><a class='nav-link text-white' href='/register.html'>Register</a></li>"
-               "<li class='nav-item'><a class='nav-link text-white' href='/login.html'>Login</a></li>");
-    } else {
-        printf("<li class='nav-item'><a class='nav-link text-white' href='/cgi-bin/logout.exe'>Logout</a></li>");
-    }
+           "<li class='nav-item'><a class='nav-link text-white' href='/contact.html'>Contact</a></li>");
+           printf("<li class='nav-item'><a class='nav-link text-white' href='/cgi-bin/logout.exe'>Logout</a></li>");
     printf("</ul></div></nav>");
 
     // Content
@@ -49,7 +44,7 @@ int main() {
                "<a href='/cgi-bin/view_ticket.exe' class='btn btn-danger btn-lg'>View Your Tickets</a>");
     }
     printf("</div></div>"
-           "<footer class='bg-dark text-white text-center py-3'>Address | Copyrights</footer>"
+           "<footer class='bg-dark text-white text-center py-3 mt-5'>&copy; 2025 HI-5 SOLUTIONS | Laptop & Mobile Sales and Repairs</footer>"
            "</body></html>");
 
     return 0;

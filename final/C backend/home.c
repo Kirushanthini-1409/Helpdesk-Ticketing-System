@@ -23,20 +23,19 @@ int main() {
     // Navbar
     printf("<nav class='navbar navbar-expand-lg navbar-dark bg-dark px-2 py-3'>"
            "<div class='container-fluid'>"
-           "<a class='navbar-brand' href='/home.exe'><h3>HI-5 SOLUTIONS</h3></a>"
+           "<a class='navbar-brand' href='/cgi-bin/home.exe'><h3>HI-5 SOLUTIONS</h3></a>"
            "<h1 class='text-white'>HELPDESK TICKETING SYSTEM</h1>"
            "<ul class='navbar-nav'>"
            "<li class='nav-item'><a class='nav-link text-white' href='/cgi-bin/home.exe'>Home</a></li>"
-           "<li class='nav-item'><a class='nav-link text-white' href='#contact'>Contact</a></li>");
+           "<li class='nav-item'><a class='nav-link text-white' href='/contact.html'>Contact</a></li>");
     if (strlen(sess_role)==0) {
-        printf("<li class='nav-item'><a class='nav-link text-white' href='/register.html'>Register</a></li>"
-               "<li class='nav-item'><a class='nav-link text-white' href='/login.html'>Login</a></li>");
+        printf("<li class='nav-item'><a class='nav-link text-white' href='/login.html'>Login</a></li>"
+		"<li class='nav-item'><a class='nav-link text-white' href='/register.html'>Register</a></li>");
     } else {
         printf("<li class='nav-item'><a class='nav-link text-white' href='/cgi-bin/logout.exe'>Logout</a></li>");
     }
     printf("</ul></div></nav>");
 
-    // Hero
     printf("<div class='container text-center mt-4'>"
            "<h2>Welcome to HI-5 SOLUTIONS</h2>"
            "<p>Your one-stop solution for laptops, mobiles, and repairs.</p>"
